@@ -1,0 +1,90 @@
+<div class="container">
+	<h1>Metro Route Planner</h1>
+	<form
+		(ngSubmit)="onSubmit()"
+		#routeForm="ngForm"
+	>
+		<div>
+			<label for="start">Start Station: </label>
+			<input
+				autocomplete="off"
+				type="text"
+				id="start"
+				[(ngModel)]="start"
+				name="start"
+				(input)="filterStations('start', $event)"
+				[placeholder]="'Type or select a station'"
+				required
+			/>
+			<ul
+				*ngIf="filteredStations.start.length > 0"
+				class="dropdown"
+			>
+				<li
+					*ngFor="let station of filteredStations.start"
+					(click)="selectStation('start', station)"
+				>
+					{{ station }}
+				</li>
+			</ul>
+		</div>
+		<div>
+			<label for="end">End Station: </label>
+			<input
+				autocomplete="off"
+				type="text"
+				id="end"
+				[(ngModel)]="end"
+				name="end"
+				(input)="filterStations('end', $event)"
+				[placeholder]="'Type or select a station'"
+				required
+			/>
+			<ul
+				*ngIf="filteredStations.end.length > 0"
+				class="dropdown"
+			>
+				<li
+					*ngFor="let station of filteredStations.end"
+					(click)="selectStation('end', station)"
+				>
+					{{ station }}
+				</li>
+			</ul>
+		</div>
+		<button
+			type="submit"
+			[disabled]="routeForm.invalid"
+		>
+			Find Route
+		</button>
+	</form>
+
+	<div
+		*ngIf="result"
+		class="result"
+	>
+		<h2>Route Information</h2>
+		<!-- <p><strong>Path:</strong>{{ result.path.join(" → ") }}</p> -->
+		<p><strong>Path:</strong></p>
+		<ul *ngIf="result.time !== 0">
+			<li
+				*ngFor="let stop of result.path"
+				[ngClass]="stop.line"
+			>
+				{{ stop.station }} ({{ stop.line }} line, {{ stop.direction }})
+			</li>
+		</ul>
+		<span *ngIf="result.time === 0"
+			>You are already at your destination!</span
+		>
+		<p><strong>Time:</strong> {{ result.time }} minutes</p>
+		<p><strong>Cost:</strong> ${{ result.cost }}</p>
+	</div>
+	<div
+		*ngIf="error"
+		class="error"
+	>
+		<p>Error: {{ error | json }}</p>
+	</div>
+</div>
