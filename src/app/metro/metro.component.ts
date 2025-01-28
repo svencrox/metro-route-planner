@@ -20,7 +20,7 @@ export class MetroComponent implements OnInit {
 	constructor(private metroService: MetroService) {}
 
 	ngOnInit(): void {
-		// Fetch stations from the backend
+		// fetch stations from the backend
 		this.metroService.getStations().subscribe({
 			next: (stations) => {
 				this.stations = stations;
@@ -39,14 +39,14 @@ export class MetroComponent implements OnInit {
 			return;
 		}
 
-		// Filter stations based on input value (case-insensitive)
+		// filter stations based on input value case insensitive
 		this.filteredStations[field] = this.stations.filter((station) =>
 			station.toLowerCase().includes(inputValue.toLowerCase())
 		);
 	}
 
 	selectStation(field: "start" | "end", station: string): void {
-		// Set the selected station and clear suggestions
+		// set the selected station and clear suggestions
 		this[field] = station;
 		this.filteredStations[field] = [];
 	}
@@ -63,17 +63,6 @@ export class MetroComponent implements OnInit {
 					this.result = null;
 				},
 			});
-		}
-	}
-
-	getLineClass(line: string): string {
-		switch (line) {
-			case "green":
-				return "green";
-			case "blue":
-				return "blue";
-			default:
-				return "black";
 		}
 	}
 }

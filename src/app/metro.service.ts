@@ -18,8 +18,8 @@ interface RouteStop {
 	providedIn: "root",
 })
 export class MetroService {
-	private apiUrl = "https://metro-route-backend.vercel.app/calculate-route";
-	private stationsUrl = "https://metro-route-backend.vercel.app/stations";
+	private apiUrl = "http://localhost:8000/calculate-route";
+	private stationsUrl = "http://localhost:8000/stations";
 
 	constructor(private http: HttpClient) {}
 
